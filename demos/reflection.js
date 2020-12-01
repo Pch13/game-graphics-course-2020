@@ -8,10 +8,10 @@ import {positions, normals, indices} from "../blender/cube.js"
 import {positions as mirrorPositions, uvs as mirrorUvs, indices as mirrorIndices} from "../blender/plane.js"
 
 let skyboxPositions = new Float32Array([
-    -1.0, 1.0, 1.0,
-    1.0, 1.0, 1.0,
-    -1.0, -1.0, 1.0,
-    1.0, -1.0, 1.0
+    -1.3, 1.3, 1.3,
+    1.3, 1.3, 1.3,
+    -1.3, -1.3, 1.3,
+    1.3, -1.3, 1.3
 ]);
 
 let skyboxTriangles = new Uint16Array([
