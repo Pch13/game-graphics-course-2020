@@ -7,10 +7,10 @@ import {positions, normals, indices} from "../blender/cube.js"
 import {positions as mirrorPositions, uvs as mirrorUvs, indices as mirrorIndices} from "../blender/plane.js"
 
 let skyboxPositions = new Float32Array([
-    -1.3, 1.3, 1.3,
-    1.3, 1.3, 1.3,
-    -1.3, -1.3, 1.3,
-    1.3, -1.3, 1.3
+    -1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0,
+    -1.0, -1.0, 1.0,
+    1.0, -1.0, 1.0
 ]);
 
 let skyboxTriangles = new Uint16Array([
@@ -144,8 +144,8 @@ let skyboxProgram = app.createProgram(skyboxVertexShader, skyboxFragmentShader);
 let mirrorProgram = app.createProgram(mirrorVertexShader, mirrorFragmentShader);
 
 let vertexArray = app.createVertexArray()
-    .vertexAttributeBuffer(0, app.createVertexBuffer(PicoGL.FLOAT, 3, positions))
-    .vertexAttributeBuffer(1, app.createVertexBuffer(PicoGL.FLOAT, 3, normals))
+    .vertexAttributeBuffer(0.2, app.createVertexBuffer(PicoGL.FLOAT, 3, positions))
+    .vertexAttributeBuffer(1.7, app.createVertexBuffer(PicoGL.FLOAT, 3, normals))
     .indexBuffer(app.createIndexBuffer(PicoGL.UNSIGNED_SHORT, 3, indices));
 
 let skyboxArray = app.createVertexArray()
@@ -236,7 +236,7 @@ async function loadTexture(fileName) {
 
         app.gl.cullFace(app.gl.FRONT);
 
-        let reflectionMatrix = calculateSurfaceReflectionMatrix(mat4.create(), mirrorModelMatrix, vec3.fromValues(0, 1, 0));
+        let reflectionMatrix = calculateSurfaceReflectionMatrix(mat4.create(), mirrorModelMatrix, vec3.fromValues(3, 0.2, 3));
         let reflectionViewMatrix = mat4.mul(mat4.create(), viewMatrix, reflectionMatrix);
         let reflectionCameraPosition = vec3.transformMat4(vec3.create(), cameraPosition, reflectionMatrix);
         drawObjects(reflectionCameraPosition, reflectionViewMatrix);
@@ -253,6 +253,7 @@ async function loadTexture(fileName) {
         mat4.multiply(modelViewProjectionMatrix, viewProjMatrix, modelMatrix);
 
         let skyboxView = mat4.clone(viewMatrix);
+        
         skyboxView[12] = 0;
         skyboxView[13] = 0;
         skyboxView[14] = 0;
@@ -282,6 +283,7 @@ async function loadTexture(fileName) {
         mirrorDrawCall.uniform("screenSize", vec2.fromValues(app.width, app.height))
         mirrorDrawCall.draw();
     }
+    
 
     function draw() {
         let time = new Date().getTime() * 0.001;
