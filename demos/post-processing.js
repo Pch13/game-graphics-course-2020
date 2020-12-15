@@ -138,7 +138,7 @@ async function loadTexture(fileName) {
 }
 
 (async () => {
-    let bgColor = vec4.fromValues(0.1, 0.1, 0.1, 1.0);
+    let bgColor = vec4.fromValues(1, 0.5, 0.5, 1.0);
     app.clearColor(bgColor[0], bgColor[1], bgColor[2], bgColor[3]);
 
     let program = app.createProgram(vertexShader.trim(), fragmentShader.trim());
@@ -175,17 +175,17 @@ async function loadTexture(fileName) {
         .texture("depthTex", depthTarget)
         .texture("noiseTex", app.createTexture2D(await loadTexture("noise.png")));
 
-    let cameraPosition = vec3.fromValues(0, 0, 9);
+    let cameraPosition = vec3.fromValues(0, 2, 8.2);
 
 
-    let startTime = new Date().getTime() / 1000;
+    let startTime = new Date().getTime() / 10;
 
     function draw() {
-        let time = new Date().getTime() / 1000 - startTime;
+        let time = new Date().getTime() / 150 - startTime;
 
-        mat4.perspective(projectionMatrix, Math.PI / 10, app.width / app.height, 0.05, 50.0);
+        mat4.perspective(projectionMatrix, Math.PI / 5, app.width / app.height, 0.05, 50.0);
         mat4.lookAt(viewMatrix, cameraPosition, vec3.fromValues(0, 0, 0), vec3.fromValues(0, 1, 0));
-        quat.fromEuler(modelRotation, Math.cos(time * 0.5) * 20 - 90, Math.sin(time * 0.5) * 20, 0)
+        quat.fromEuler(modelRotation, Math.cos(time * 1.3) * 20 - 90, Math.sin(time * 0.5) * 100, 0)
         mat4.multiply(viewProjMatrix, projectionMatrix, viewMatrix);
 
         mat4.multiply(modelViewMatrix, viewMatrix, modelMatrix);
@@ -199,7 +199,7 @@ async function loadTexture(fileName) {
            .clear();
 
         drawCall.uniform("diffuseColor", vec4.fromValues(0.3, 0.0, 1.0, 1.0));
-        mat4.fromRotationTranslation(modelMatrix, modelRotation, vec3.fromValues(-1.5, 0, -2));
+        mat4.fromRotationTranslation(modelMatrix, modelRotation, vec3.fromValues(-3.2, 0, -2));
         mat4.multiply(modelViewMatrix, viewMatrix, modelMatrix);
         mat4.multiply(modelViewProjectionMatrix, viewProjMatrix, modelMatrix);
         drawCall.draw();
@@ -211,7 +211,7 @@ async function loadTexture(fileName) {
         drawCall.draw();
 
         drawCall.uniform("diffuseColor", vec4.fromValues(1.0, 0.0, 0.2, 1.0));
-        mat4.fromRotationTranslation(modelMatrix, modelRotation, vec3.fromValues(1.5, 0, 2));
+        mat4.fromRotationTranslation(modelMatrix, modelRotation, vec3.fromValues(-1.2, 0, 2));
         mat4.multiply(modelViewMatrix, viewMatrix, modelMatrix);
         mat4.multiply(modelViewProjectionMatrix, viewProjMatrix, modelMatrix);
         drawCall.draw();
