@@ -24,7 +24,7 @@ let fragmentShader = `
     out vec4 fragColor;
     
     void main() {
-        vec3 shadowCoord = (vPositionFromLight.xyz / vPositionFromLight.w) / 2.0 + 0.5;        
+        vec3 shadowCoord = (vPositionFromLight.xyz / vPositionFromLight.w) / 2.0 + 0.7;        
         float shadow = texture(shadowMap, shadowCoord);
         
         vec3 normal = normalize(vNormal);
@@ -33,7 +33,7 @@ let fragmentShader = `
         vec3 reflectionDirection = reflect(-lightDirection, normal);
         
         float diffuse = max(dot(lightDirection, normal), 0.0) * max(shadow, 0.2);        
-        float specular = shadow * pow(max(dot(reflectionDirection, eyeDirection), 0.0), 100.0) * 0.7;
+        float specular = shadow * pow(max(dot(reflectionDirection, eyeDirection), 0.0), 10.0) * 0.5;
         fragColor = vec4(diffuse * baseColor.rgb + ambientColor.rgb + specular, baseColor.a);
     }
 `;
