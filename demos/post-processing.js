@@ -99,7 +99,7 @@ let postFragmentShader = `
         col = depthOfField(col, depth, v_position.xy);
 
         // Noise         
-        col.rgb += (1.0 - col.rgb) * random(v_position.xy) * 0.1;
+        col.rgb += (3.0 - col.rgb) * random(v_position.xy) * 0.1;
         
         // Contrast + Brightness
         col = pow(col, vec4(1.5)) * 2.0;
@@ -114,7 +114,7 @@ let postFragmentShader = `
         //col.rgb = 1.0 - col.rgb;
         
         // Fog
-        //col.rgb = col.rgb + vec3((depth - 0.992) * 200.0);         
+        //col.rgb = col.rgb + vec3((depth - 0.992) * 20.0);         
                         
         outColor = col;
     }
