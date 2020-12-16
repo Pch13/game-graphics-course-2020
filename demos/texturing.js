@@ -59,7 +59,7 @@ let vertexShader = `
     
     void main()
     {
-        gl_Position = modelViewProjectionMatrix * vec4(position, 1.0);           
+        gl_Position = modelViewProjectionMatrix * vec4(position, 1.8);           
         v_uv = uv;
     }
 `;
