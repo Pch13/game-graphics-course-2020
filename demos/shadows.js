@@ -72,7 +72,7 @@ let shadowFragmentShader = `
     
     void main() {
         // Uncomment to see the depth buffer of the shadow map    
-        //fragColor = vec4((gl_FragCoord.z - 0.98) * 50.0);    
+        fragColor = vec4((gl_FragCoord.z - 0.98) * 50.0);    
     }
 `;
 
@@ -103,7 +103,7 @@ let vertexArray = app.createVertexArray()
     .indexBuffer(app.createIndexBuffer(PicoGL.UNSIGNED_SHORT, 3, indices));
 
 // Change the shadow texture resolution to checkout the difference
-let shadowDepthTarget = app.createTexture2D(3, 52, {
+let shadowDepthTarget = app.createTexture2D(3, 175, {
     internalFormat: PicoGL.DEPTH_COMPONENT16,
     compareMode: PicoGL.COMPARE_REF_TO_TEXTURE,
     magFilter: PicoGL.LINEAR,
@@ -145,7 +145,7 @@ function renderShadowMap() {
     app.gl.cullFace(app.gl.FRONT);
 
     // Change the projection and view matrices to render objects from the point view of light source
-    mat4.perspective(projMatrix, Math.PI * 0.1, shadowDepthTarget.width / shadowDepthTarget.height, 0.1, 100.0);
+    mat4.perspective(projMatrix, Math.PI * 0.1, shadowDepthTarget.width / shadowDepthTarget.height, 2.5, 100.0);
     mat4.multiply(lightViewProjMatrix, projMatrix, lightViewMatrix);
 
     drawObjects(shadowDrawCall);
@@ -168,7 +168,7 @@ function drawObjects(dc) {
 
     // Large object
     quat.fromEuler(rotation, time * 12, time * 14, 0);
-    mat4.fromRotationTranslationScale(modelMatrix, rotation, vec3.fromValues(-2.4, -2.4, -1.2), [2, 2, 2]);
+    mat4.fromRotationTranslationScale(modelMatrix, rotation, vec3.fromValues(-2.4, -4, -1.2), [2, 2, 2]);
     mat4.multiply(modelViewProjectionMatrix, viewProjMatrix, modelMatrix);
     mat4.multiply(lightModelViewProjectionMatrix, lightViewProjMatrix, modelMatrix);
 
